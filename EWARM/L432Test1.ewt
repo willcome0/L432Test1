@@ -1234,7 +1234,7 @@
                     <name>$PROJ_DIR$\..\Core\My\flash.c</name>
                 </file>
                 <file>
-                    <name>$PROJ_DIR$\..\Core\My\flash.h</name>
+                    <name>$PROJ_DIR$\..\Core\My\font.c</name>
                 </file>
                 <file>
                     <name>$PROJ_DIR$\..\Core\My\mpu9250.c</name>

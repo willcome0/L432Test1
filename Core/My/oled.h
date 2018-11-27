@@ -8,19 +8,19 @@ extern "C" {
 #include "main.h"
 #include "stm32l4xx_hal.h"
 #include "common.h"
+#include "font.h"
 
-#define ZH_SIZE_14	14
-
-#define ZH_FONT14_NUM       50
-#define ZH_FONT14_HEX_NUM   28
-
-#define EN_FONT14_HEX_NUM   14
+//#define ZH_SIZE_14	14
 
 
-#define ZH_FONT16_NUM       100
-#define ZH_FONT16_HEX_NUM   32
 
-#define EN_FONT16_HEX_NUM   16
+    
+
+
+
+
+
+
 
 #define	OLED_X_MAX		88				// 定义液晶x轴的像素数
 #define	OLED_Y_MAX		128 				// 定义液晶y轴的像素数
@@ -92,8 +92,6 @@ extern const unsigned char asc2_1206[95][12];
 extern const unsigned char asc2_1608[95][16];
 extern const unsigned char asc2_2412[95][36];
 
-extern const char IMG64[10][512];
-extern const char IMG48[10][288];
 
 
 
