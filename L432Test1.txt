@@ -1,0 +1,65 @@
+Configuration	L432Test1
+STM32CubeMX 	4.27.0
+Date	11/12/2018
+MCU	STM32L432KBUx
+
+
+
+PERIPHERALS	MODES	FUNCTIONS	PINS
+I2C1	I2C	I2C1_SCL	PB6
+I2C1	I2C	I2C1_SDA	PB7
+RCC	Crystal/Ceramic Resonator	RCC_OSC32_IN	PC14-OSC32_IN (PC14)
+RCC	Crystal/Ceramic Resonator	RCC_OSC32_OUT	PC15-OSC32_OUT (PC15)
+SYS	Serial Wire	SYS_JTCK-SWCLK	PA14 (JTCK-SWCLK)
+SYS	Serial Wire	SYS_JTMS-SWDIO	PA13 (JTMS-SWDIO)
+SYS	TIM1	SYS_VS_tim1	VP_SYS_VS_tim1
+TIM2	Internal Clock	TIM2_VS_ClockSourceINT	VP_TIM2_VS_ClockSourceINT
+USART2	Asynchronous	USART2_RX	PA3
+USART2	Asynchronous	USART2_TX	PA2
+
+
+
+Pin Nb	PINs	FUNCTIONs	LABELs
+2	PC14-OSC32_IN (PC14)	RCC_OSC32_IN	
+3	PC15-OSC32_OUT (PC15)	RCC_OSC32_OUT	
+6	PA0	GPIO_EXTI0	KEY_MID
+8	PA2	USART2_TX	USART2_TX
+9	PA3	USART2_RX	USART2_RX
+10	PA4	GPIO_EXTI4	KEY_DOWN
+11	PA5	GPIO_EXTI5	KEY_RIGHT
+12	PA6	GPIO_EXTI6	KEY_LEFT
+13	PA7	GPIO_EXTI7	KEY_UP
+18	PA8	GPIO_Output	LED1
+19	PA9	GPIO_Output	LED2
+20	PA10	GPIO_Output	LED3
+23	PA13 (JTMS-SWDIO)	SYS_JTMS-SWDIO	
+24	PA14 (JTCK-SWCLK)	SYS_JTCK-SWCLK	
+29	PB6	I2C1_SCL	I2C1_SCL
+30	PB7	I2C1_SDA	I2C1_SDA
+
+
+
+SOFTWARE PROJECT
+
+Project Settings : 
+Project Name : L432Test1
+Project Folder : F:\System\Documents\CubeMX\L432Test1
+Toolchain / IDE : EWARM V8
+Firmware Package Name and Version : STM32Cube FW_L4 V1.13.0
+
+
+Code Generation Settings : 
+STM32Cube Firmware Library Package : Copy only the necessary library files
+Generate peripheral initialization as a pair of '.c/.h' files per peripheral : Yes
+Backup previously generated files when re-generating : No
+Delete previously generated files when not re-generated : Yes
+Set all free pins as analog (to optimize the power consumption) : No
+
+
+Toolchains Settings : 
+Compiler Optimizations : 
+
+
+
+
+
