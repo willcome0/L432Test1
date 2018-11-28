@@ -566,11 +566,11 @@ void UI_ShowTime(uint8_t num)
 //        sprintf(str, "%02d:%02d:%02d", timeStructure.Hours, timeStructure.Minutes, timeStructure.Seconds);
 //        OLED_Show_StrAll(0, 16, 16, str, 1);
         
-        OLED_Show_TimeNum(20, 4, 48, '0'+timeStructure.Hours/10, 1);
-        OLED_Show_TimeNum(44, 4, 48, '0'+timeStructure.Hours%10, 1);
+        OLED_Show_Num(20, 4, 48, '0'+timeStructure.Hours/10, 1);
+        OLED_Show_Num(44, 4, 48, '0'+timeStructure.Hours%10, 1);
         
-        OLED_Show_TimeNum(20, 46, 48, '0'+timeStructure.Minutes/10, 1);
-        OLED_Show_TimeNum(44, 46, 48, '0'+timeStructure.Minutes%10, 1);
+        OLED_Show_Num(20, 46, 48, '0'+timeStructure.Minutes/10, 1);
+        OLED_Show_Num(44, 46, 48, '0'+timeStructure.Minutes%10, 1);
         
         sprintf(str, "%02d", timeStructure.Seconds);
         OLED_Show_StrAll(72, 72, 16, str, 1);
@@ -771,14 +771,14 @@ void AdjustBrightness(void)
                 return;
                 
         }
-        OLED_Show_TimeNum(32, 30, 64, '0' + Level, 1);
-        
-        if (levelTemp != Level)
-        {
-            levelTemp = Level;
-            OLED_Write(0x81, OLED_CMD);  
-            OLED_Write((uint8_t)Level*25, OLED_CMD);
-        }
+        OLED_Show_Num(32, 30, 64, '0' + Level, 1);
+        // ÔÝÊ±×¢ÊÍ
+//        if (levelTemp != Level)
+//        {
+//            levelTemp = Level;
+//            OLED_Write(0x81, OLED_CMD);  
+//            OLED_Write((uint8_t)Level*25, OLED_CMD);
+//        }
         
         OLED_Refresh_Gram();
     }

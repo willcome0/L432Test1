@@ -227,6 +227,7 @@
                     <state>USE_HAL_DRIVER</state>
                     <state>STM32L432xx</state>
                     <state>__FPU_PRESENT</state>
+                    <state>USE_FULL_ASSERT</state>
                 </option>
                 <option>
                     <name>CCPreprocFile</name>

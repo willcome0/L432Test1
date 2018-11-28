@@ -16,16 +16,16 @@ extern "C" {
     
     
 /* Êý×Ö */
-extern uint8_t NUM_FONT32[10*64];
-extern uint8_t NUM_FONT48[10*144];
-extern uint8_t NUM_FONT64[10*256];
+extern char NUM_FONT32[10*64];
+extern char NUM_FONT48[10*144];
+extern char NUM_FONT64[10*256];
 
 /* ×Ö·û */
 #define EN_FONT14_HEX_NUM   14
 #define EN_FONT16_HEX_NUM   16
 
-extern uint8_t EN_FONT14[95*EN_FONT14_HEX_NUM];
-extern uint8_t EN_FONT16[95*EN_FONT16_HEX_NUM];
+extern char EN_FONT14[95*EN_FONT14_HEX_NUM];
+extern char EN_FONT16[95*EN_FONT16_HEX_NUM];
 
 /* ºº×Ö */
 
@@ -42,8 +42,8 @@ extern char ZH_FONT16_TAB[ZH_FONT16_NUM];
 extern char ZH_FONT16[ZH_FONT16_NUM*ZH_FONT16_HEX_NUM];
 
 /* Í¼Æ¬ */
-extern const uint8_t IMG64[10][512];
-extern const uint8_t IMG48[10][288];
+extern char IMG64[10][512];
+extern char IMG48[10][288];
 
 #ifdef __cplusplus
 }

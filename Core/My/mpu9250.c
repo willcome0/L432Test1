@@ -8,8 +8,10 @@ char  test=0;
 short T_X,T_Y,T_Z,T_T;
 void Single_Write(uint8_t slave_add, uint8_t reg_add, uint8_t data)
 {
-    uint8_t write_data[2] = {reg_add, data};
-    HAL_I2C_Master_Transmit(I2C_Device, slave_add, write_data, 2, 0xFFFF);
+//    uint8_t write_data[2] = {reg_add, data};
+//    HAL_I2C_Master_Transmit(I2C_Device, slave_add, write_data, 2, 0xFFFF);
+
+    HAL_I2C_Mem_Write(I2C_Device, slave_add, reg_add, 1, &data, 1, 0xFFFF);
 }
 
 uint8_t Single_Read(uint8_t slave_add, uint8_t reg_add)
