@@ -163,12 +163,12 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 32);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
     /* add threads, ... */
-    osThreadDef(readKey,        readKey_Task,       osPriorityNormal,       0, 64);
+    osThreadDef(readKey,        readKey_Task,       osPriorityNormal,       0, 32);
     osThreadDef(showUI,         showUI_Task,        osPriorityNormal,       0, 160);
     osThreadDef(poseControl,    poseControl_Task,   osPriorityAboveNormal,       0, 80);
     
@@ -209,7 +209,7 @@ void StartDefaultTask(void const * argument)
     for (;;)
     {
         osDelay(500);
-//        printf("中文\r\n");
+        printf("tick:%d\r\n", uwTick);
 //        HAL_GPIO_TogglePin(LED3_GPIO_Port, LED3_Pin);
     }
   /* USER CODE END StartDefaultTask */
@@ -220,66 +220,68 @@ void StartDefaultTask(void const * argument)
 
 void readKey_Task(void const * argument)
 {
+    
     for (;;)
     {
-        if (HAL_GPIO_ReadPin(KEY_UP_GPIO_Port,      KEY_UP_Pin)     == GPIO_PIN_RESET ||
-            HAL_GPIO_ReadPin(KEY_DOWN_GPIO_Port,    KEY_DOWN_Pin)   == GPIO_PIN_RESET ||
-            HAL_GPIO_ReadPin(KEY_MID_GPIO_Port,     KEY_MID_Pin)    == GPIO_PIN_RESET ||
-            HAL_GPIO_ReadPin(KEY_LEFT_GPIO_Port,    KEY_LEFT_Pin)   == GPIO_PIN_RESET ||
-            HAL_GPIO_ReadPin(KEY_RIGHT_GPIO_Port,   KEY_RIGHT_Pin)  == GPIO_PIN_RESET)
-        {
-            osDelay(10);
-            if (HAL_GPIO_ReadPin(KEY_UP_GPIO_Port, KEY_UP_Pin) == GPIO_PIN_RESET)
-            {
-                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-                KeyValue = PressUp;
-                
-                
-            }
-            else if (HAL_GPIO_ReadPin(KEY_DOWN_GPIO_Port, KEY_DOWN_Pin) == GPIO_PIN_RESET)
-            {
-                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-                KeyValue = PressDown;
-                
-                
-            }
-            else if (HAL_GPIO_ReadPin(KEY_MID_GPIO_Port, KEY_MID_Pin) == GPIO_PIN_RESET)
-            {
-                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-                KeyValue = PressMid;
-                
-                
-            }
-            else if (HAL_GPIO_ReadPin(KEY_LEFT_GPIO_Port, KEY_LEFT_Pin) == GPIO_PIN_RESET)
-            {
-                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-                KeyValue = PressLeft;
-                
-                
-            }
-            else if (HAL_GPIO_ReadPin(KEY_RIGHT_GPIO_Port, KEY_RIGHT_Pin) == GPIO_PIN_RESET)
-            {
-                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
-                KeyValue = PressRight;
-                
-                
-            }
-            else
-            {
-                KeyValue = PressNull;
-            }
-            
-            osSemaphoreRelease(keyPressed_BinSemHandle);
-            while  (HAL_GPIO_ReadPin(KEY_UP_GPIO_Port,      KEY_UP_Pin)     == GPIO_PIN_RESET ||
-                    HAL_GPIO_ReadPin(KEY_DOWN_GPIO_Port,    KEY_DOWN_Pin)   == GPIO_PIN_RESET ||
-                    HAL_GPIO_ReadPin(KEY_MID_GPIO_Port,     KEY_MID_Pin)    == GPIO_PIN_RESET ||
-                    HAL_GPIO_ReadPin(KEY_LEFT_GPIO_Port,    KEY_LEFT_Pin)   == GPIO_PIN_RESET ||
-                    HAL_GPIO_ReadPin(KEY_RIGHT_GPIO_Port,   KEY_RIGHT_Pin)  == GPIO_PIN_RESET);
-        }
-        else
-        {
-            KeyValue = PressNull;
-        }
+        osDelay(1000);
+//        if (HAL_GPIO_ReadPin(KEY_UP_GPIO_Port,      KEY_UP_Pin)     == GPIO_PIN_RESET ||
+//            HAL_GPIO_ReadPin(KEY_DOWN_GPIO_Port,    KEY_DOWN_Pin)   == GPIO_PIN_RESET ||
+//            HAL_GPIO_ReadPin(KEY_MID_GPIO_Port,     KEY_MID_Pin)    == GPIO_PIN_RESET ||
+//            HAL_GPIO_ReadPin(KEY_LEFT_GPIO_Port,    KEY_LEFT_Pin)   == GPIO_PIN_RESET ||
+//            HAL_GPIO_ReadPin(KEY_RIGHT_GPIO_Port,   KEY_RIGHT_Pin)  == GPIO_PIN_RESET)
+//        {
+//            osDelay(10);
+//            if (HAL_GPIO_ReadPin(KEY_UP_GPIO_Port, KEY_UP_Pin) == GPIO_PIN_RESET)
+//            {
+//                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+//                KeyValue = PressUp;
+//                
+//                
+//            }
+//            else if (HAL_GPIO_ReadPin(KEY_DOWN_GPIO_Port, KEY_DOWN_Pin) == GPIO_PIN_RESET)
+//            {
+//                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+//                KeyValue = PressDown;
+//                
+//                
+//            }
+//            else if (HAL_GPIO_ReadPin(KEY_MID_GPIO_Port, KEY_MID_Pin) == GPIO_PIN_RESET)
+//            {
+//                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+//                KeyValue = PressMid;
+//                
+//                
+//            }
+//            else if (HAL_GPIO_ReadPin(KEY_LEFT_GPIO_Port, KEY_LEFT_Pin) == GPIO_PIN_RESET)
+//            {
+//                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+//                KeyValue = PressLeft;
+//                
+//                
+//            }
+//            else if (HAL_GPIO_ReadPin(KEY_RIGHT_GPIO_Port, KEY_RIGHT_Pin) == GPIO_PIN_RESET)
+//            {
+//                HAL_GPIO_TogglePin(LED1_GPIO_Port, LED1_Pin);
+//                KeyValue = PressRight;
+//                
+//                
+//            }
+//            else
+//            {
+//                KeyValue = PressNull;
+//            }
+//            
+//            osSemaphoreRelease(keyPressed_BinSemHandle);
+//            while  (HAL_GPIO_ReadPin(KEY_UP_GPIO_Port,      KEY_UP_Pin)     == GPIO_PIN_RESET ||
+//                    HAL_GPIO_ReadPin(KEY_DOWN_GPIO_Port,    KEY_DOWN_Pin)   == GPIO_PIN_RESET ||
+//                    HAL_GPIO_ReadPin(KEY_MID_GPIO_Port,     KEY_MID_Pin)    == GPIO_PIN_RESET ||
+//                    HAL_GPIO_ReadPin(KEY_LEFT_GPIO_Port,    KEY_LEFT_Pin)   == GPIO_PIN_RESET ||
+//                    HAL_GPIO_ReadPin(KEY_RIGHT_GPIO_Port,   KEY_RIGHT_Pin)  == GPIO_PIN_RESET);
+//        }
+//        else
+//        {
+//            KeyValue = PressNull;
+//        }
     }
 }
 
@@ -293,7 +295,7 @@ void showUI_Task(void const * argument)
     for (;;)
     {
         osDelay(30);
-        osSemaphoreWait(keyPressed_BinSemHandle, osWaitForever);
+//        osSemaphoreWait(keyPressed_BinSemHandle, osWaitForever);
         switch (KeyValue)
         {
             case PressUp:
@@ -436,7 +438,7 @@ void showUI_Task(void const * argument)
                 break;
             }
         }
-        
+        KeyValue = PressNull;
         OLED_Clear();
         if (uiCase < 0)
         {
@@ -644,47 +646,47 @@ void UI_ShowTime(uint8_t num)
 //        printf("%5d %5d %5d\r\n", g_x, g_y, g_z);
 //        printf("%5d %5d %5d\r\n\r\n", a_x, a_y, a_z);
         
-        if (
-            immobile == 0 &&
-            abs(g_x) < 30 &&
-            abs(g_y) < 30 &&
-            abs(g_z) < 30 
-            )
-        {
-            immobileCount++;
-            if (immobileCount > 30 && immobile == 0)
-            {
-                
-//                osThreadSuspend(showUI_Handle);
-                OLED_Clear();
-
-                immobile = 1;
-            }
-        }
-        else
-        {
-            immobileCount = 0;
-        }
-        
-        if (immobile == 0 && (abs(a_x)>75 || abs(a_y) > 75))
-        {
-            immobile = 1;
-        }
-        
-        if (immobile == 1)
-        {
-            // 进入睡眠模式
-            OLED_Clear();
-        }
-        
-        /* 唤醒 */
-        if (immobile == 1 && 
-            ((abs(g_x)>20 || abs(g_y)>20 || abs(g_z)>20) && abs(a_x)<50 && abs(a_y)<50) )
-        {
-//            osThreadResume(showUI_Handle);
-            immobile = 0;
-            immobileCount = 0;
-        }
+//        if (
+//            immobile == 0 &&
+//            abs(g_x) < 30 &&
+//            abs(g_y) < 30 &&
+//            abs(g_z) < 30 
+//            )
+//        {
+//            immobileCount++;
+//            if (immobileCount > 30 && immobile == 0)
+//            {
+//                
+////                osThreadSuspend(showUI_Handle);
+//                OLED_Clear();
+//
+//                immobile = 1;
+//            }
+//        }
+//        else
+//        {
+//            immobileCount = 0;
+//        }
+//        
+//        if (immobile == 0 && (abs(a_x)>75 || abs(a_y) > 75))
+//        {
+//            immobile = 1;
+//        }
+//        
+//        if (immobile == 1)
+//        {
+//            // 进入睡眠模式
+//            OLED_Clear();
+//        }
+//        
+//        /* 唤醒 */
+//        if (immobile == 1 && 
+//            ((abs(g_x)>20 || abs(g_y)>20 || abs(g_z)>20) && abs(a_x)<50 && abs(a_y)<50) )
+//        {
+////            osThreadResume(showUI_Handle);
+//            immobile = 0;
+//            immobileCount = 0;
+//        }
         OLED_Refresh_Gram();
     }
 
@@ -773,12 +775,12 @@ void AdjustBrightness(void)
         }
         OLED_Show_Num(32, 30, 64, '0' + Level, 1);
         // 暂时注释
-//        if (levelTemp != Level)
-//        {
-//            levelTemp = Level;
-//            OLED_Write(0x81, OLED_CMD);  
-//            OLED_Write((uint8_t)Level*25, OLED_CMD);
-//        }
+        if (levelTemp != Level)
+        {
+            levelTemp = Level;
+            OLED_Write(0x81, OLED_CMD);  
+            OLED_Write((uint8_t)Level*25, OLED_CMD);
+        }
         
         OLED_Refresh_Gram();
     }

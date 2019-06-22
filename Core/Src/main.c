@@ -75,6 +75,26 @@ void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
+struct Key_Struct
+{
+    struct KeyTime_Struct
+    {
+//        uint32_t *Now;
+        uint32_t Last;
+    }Time;
+    enum
+    {
+        Press,
+        Release,
+    }PrimaryState;
+    enum
+    {
+        NoPressed,
+        ShortPressed,
+        DoublePressed,
+        LongPressed,
+    }FinalyState;
+}KeyUp, KeyDown, KeyMid, KeyLeft, KeyRight;
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
@@ -136,7 +156,7 @@ int main(void)
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
-
+    
     }
   /* USER CODE END 3 */
 
@@ -226,7 +246,85 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+#define Is_ShortPress_Threshold   1500
 
+PressKeyValue JudgeKey(GPIO_TypeDef* GPIOx, uint16_t GPIO_Pin)
+{
+    struct Key_Struct *key_state;
+    key_state = &KeyLeft;
+    if(key_state->PrimaryState == Release)   // 上次为释放         
+    {
+        if(HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_RESET)    // 中断为下降沿触发
+        {
+            key_state->PrimaryState = Press;
+            key_state->Time.Last = uwTick;
+        }
+    }
+    else if(key_state->PrimaryState == Press)
+    {
+        if(HAL_GPIO_ReadPin(GPIOx, GPIO_Pin) == GPIO_PIN_SET)
+        {
+            if((uwTick - key_state->Time.Last > 10)&&
+               (uwTick - key_state->Time.Last < Is_ShortPress_Threshold))
+            {
+                key_state->FinalyState = ShortPressed;
+                key_state->PrimaryState = Release;
+                switch(GPIO_Pin)
+                {
+                    case KEY_UP_Pin:        return PressUp;
+                    case KEY_DOWN_Pin:      return PressDown;
+                    case KEY_MID_Pin:       return PressMid;
+                    case KEY_LEFT_Pin:      return PressLeft;
+                    case KEY_RIGHT_Pin:     return PressRight;
+                }
+                
+            }
+            else if(uwTick - key_state->Time.Last > Is_ShortPress_Threshold)
+            {
+                key_state->FinalyState = LongPressed;
+                key_state->PrimaryState = Release;
+                switch(GPIO_Pin)
+                {
+                    case KEY_UP_Pin:        return PressUp;
+                    case KEY_DOWN_Pin:      return PressDown;
+                    case KEY_MID_Pin:       return PressMid;
+                    case KEY_LEFT_Pin:      return PressLeft;
+                    case KEY_RIGHT_Pin:     return PressRight;
+                }
+            }
+            else
+            {
+                key_state->PrimaryState = Release;
+                return PressNull;
+            }
+        }
+    }
+}
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+    switch (GPIO_Pin)
+    {
+        case KEY_UP_Pin:
+            KeyValue = JudgeKey(KEY_UP_GPIO_Port, KEY_UP_Pin);
+            break;
+            
+        case KEY_DOWN_Pin:
+            KeyValue = JudgeKey(KEY_DOWN_GPIO_Port, KEY_DOWN_Pin);
+            break;
+            
+        case KEY_MID_Pin:
+            KeyValue = JudgeKey(KEY_MID_GPIO_Port, KEY_MID_Pin);
+            break;
+            
+        case KEY_LEFT_Pin:
+            KeyValue = JudgeKey(KEY_LEFT_GPIO_Port, KEY_LEFT_Pin);
+            break;
+
+        case KEY_RIGHT_Pin:
+            KeyValue = JudgeKey(KEY_RIGHT_GPIO_Port, KEY_RIGHT_Pin);
+            break;
+    }
+}
 /* USER CODE END 4 */
 
 /**
